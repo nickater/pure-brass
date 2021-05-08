@@ -51,7 +51,9 @@
               "apps/pure-brass-web/src/favicon.ico",
               "apps/pure-brass-web/src/assets"
             ],
-            "styles": ["apps/pure-brass-web/src/styles.scss"],
+            "styles": [
+              "apps/pure-brass-web/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -112,7 +114,9 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/pure-brass-web"],
+          "outputs": [
+            "coverage/apps/pure-brass-web"
+          ],
           "options": {
             "jestConfig": "apps/pure-brass-web/jest.config.js",
             "passWithNoTests": true
@@ -120,28 +124,60 @@
         }
       }
     },
-    "pure-brass-web-e2e": {
-      "root": "apps/pure-brass-web-e2e",
-      "sourceRoot": "apps/pure-brass-web-e2e/src",
+    "pure-brass-api": {
+      "root": "apps/pure-brass-api",
+      "sourceRoot": "apps/pure-brass-api/src",
       "projectType": "application",
       "architect": {
-        "e2e": {
-          "builder": "@nrwl/cypress:cypress",
+        "build": {
+          "builder": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
-            "cypressConfig": "apps/pure-brass-web-e2e/cypress.json",
-            "tsConfig": "apps/pure-brass-web-e2e/tsconfig.e2e.json",
-            "devServerTarget": "pure-brass-web:serve"
+            "outputPath": "dist/apps/pure-brass-api",
+            "main": "apps/pure-brass-api/src/main.ts",
+            "tsConfig": "apps/pure-brass-api/tsconfig.app.json",
+            "assets": [
+              "apps/pure-brass-api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
-              "devServerTarget": "pure-brass-web:serve:production"
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/pure-brass-api/src/environments/environment.ts",
+                  "with": "apps/pure-brass-api/src/environments/environment.prod.ts"
+                }
+              ]
             }
+          }
+        },
+        "serve": {
+          "builder": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "pure-brass-api:build"
           }
         },
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/pure-brass-web-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/pure-brass-api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/pure-brass-api"
+          ],
+          "options": {
+            "jestConfig": "apps/pure-brass-api/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
