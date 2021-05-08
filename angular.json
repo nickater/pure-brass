@@ -1,0 +1,150 @@
+{
+  "version": 1,
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "defaultProject": "pure-brass-web",
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "projects": {
+    "pure-brass-web": {
+      "projectType": "application",
+      "root": "apps/pure-brass-web",
+      "sourceRoot": "apps/pure-brass-web/src",
+      "prefix": "pure-brass",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/pure-brass-web",
+            "index": "apps/pure-brass-web/src/index.html",
+            "main": "apps/pure-brass-web/src/main.ts",
+            "polyfills": "apps/pure-brass-web/src/polyfills.ts",
+            "tsConfig": "apps/pure-brass-web/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "apps/pure-brass-web/src/favicon.ico",
+              "apps/pure-brass-web/src/assets"
+            ],
+            "styles": ["apps/pure-brass-web/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/pure-brass-web/src/environments/environment.ts",
+                  "with": "apps/pure-brass-web/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "pure-brass-web:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "pure-brass-web:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "pure-brass-web:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/pure-brass-web/src/**/*.ts",
+              "apps/pure-brass-web/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/pure-brass-web"],
+          "options": {
+            "jestConfig": "apps/pure-brass-web/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "pure-brass-web-e2e": {
+      "root": "apps/pure-brass-web-e2e",
+      "sourceRoot": "apps/pure-brass-web-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/pure-brass-web-e2e/cypress.json",
+            "tsConfig": "apps/pure-brass-web-e2e/tsconfig.e2e.json",
+            "devServerTarget": "pure-brass-web:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "pure-brass-web:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/pure-brass-web-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
