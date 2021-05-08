@@ -1,6 +1,6 @@
-import Instrument from '../models/Instrument';
+import Instrument from '../models/instrument';
 import { Request, Response } from 'express';
-import User from '../models/User';
+import User from '../models/user';
 
 export const getAllInstruments = async (req: Request, res: Response) => {
   return res.json({ msg: 'bitch' });

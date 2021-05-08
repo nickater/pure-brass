@@ -5,7 +5,7 @@
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parserOptions": {
-        "project": ["apps/pure-brass-api/tsconfig.*?.json"]
+        "project": ["libs/interfaces/tsconfig.*?.json"]
       },
       "rules": {}
     },

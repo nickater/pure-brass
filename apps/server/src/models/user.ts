@@ -3,12 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   BaseEntity,
-  ManyToOne,
   OneToMany,
   OneToOne,
 } from 'typeorm';
-import Auth from './Auth';
-import Instrument from './Instrument';
+import Auth from './auth';
+import Instrument from './instrument';
 
 @Entity()
 export default class User extends BaseEntity {
@@ -33,7 +32,7 @@ export default class User extends BaseEntity {
   @OneToMany(() => Instrument, (instrument) => instrument.owner)
   instruments: Instrument[];
 
-  @OneToOne((type) => Auth, (auth) => auth.user)
+  @OneToOne(() => Auth, (auth) => auth.user)
   auth: Auth;
 }
 

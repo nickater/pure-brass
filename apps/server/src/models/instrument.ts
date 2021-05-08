@@ -5,11 +5,10 @@ import {
   BaseEntity,
   ManyToOne,
 } from 'typeorm';
-import { UserController } from '../controllers/user.controller';
-import User from './User';
-
+import User from './user';
+import { IInstrument } from '@pure-brass/interfaces';
 @Entity()
-export default class Instrument extends BaseEntity {
+export default class Instrument extends BaseEntity implements IInstrument {
   @PrimaryGeneratedColumn()
   id: number;
   @Column()
@@ -39,7 +38,7 @@ export default class Instrument extends BaseEntity {
   @Column()
   dateUpdated: Date;
 
-  @ManyToOne((type) => User, (user) => user.instruments)
+  @ManyToOne(() => User, (user) => user.instruments)
   owner: User;
 }
 

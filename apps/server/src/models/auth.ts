@@ -1,12 +1,12 @@
 import { BaseEntity, OneToOne } from 'typeorm';
-import User from './User';
+import User from './user';
 
 export default class Auth extends BaseEntity {
   id: string;
   password: string;
   role: Role;
 
-  @OneToOne((type) => User, (user) => user.auth)
+  @OneToOne(() => User, (user: User) => user.auth)
   user: User;
 }
 

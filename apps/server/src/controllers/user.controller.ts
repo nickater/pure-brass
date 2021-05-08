@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import User from '../models/User';
+import User from '../models/user';
 
 export class UserController {
   async all(request: Request, response: Response, next: NextFunction) {

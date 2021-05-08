@@ -1,3 +1,7 @@
 module.exports = {
-  projects: ['<rootDir>/apps/pure-brass-web', '<rootDir>/apps/pure-brass-api'],
+  projects: [
+    '<rootDir>/apps/web',
+    '<rootDir>/apps/server',
+    '<rootDir>/libs/interfaces',
+  ],
 };
